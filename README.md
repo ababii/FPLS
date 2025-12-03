@@ -47,6 +47,15 @@ coef_soy, _ = fit_fpls(X_soy, y_soy, m_max=10, ds=1.0)
 # Extract coefficients using 4 components
 beta_corn = coef_corn[:, 4]
 beta_soy = coef_soy[:, 4]
+```
+
+The coefficient functions reveal how different temperature ranges affect crop yields, with the functional approach capturing smooth nonlinear relationships that traditional methods might miss.
+
+### Visualizing Results
+
+```python
+from fpls import plot_coefficient_function
+import numpy as np
 
 # Plot comparison
 fig, axes = plot_comparison(
@@ -62,67 +71,11 @@ import matplotlib.pyplot as plt
 plt.show()
 ```
 
+**Output:**
+
+![Temperature Effects on Crop Yields](docs/images/crop_yield_comparison.png)
+
 The coefficient functions reveal how different temperature ranges affect crop yields, with the functional approach capturing smooth nonlinear relationships that traditional methods might miss.
-
-### Basic Functional Regression
-
-```python
-import numpy as np
-from fpls import FunctionalPLS
-
-# Generate synthetic functional data
-n_samples = 200
-n_grid_points = 50
-
-X = np.random.randn(n_samples, n_grid_points)
-beta_true = np.sin(np.linspace(0, 2*np.pi, n_grid_points))
-y = X @ beta_true + np.random.randn(n_samples) * 0.5
-
-# Fit Functional PLS
-model = FunctionalPLS(m_max=10)
-model.fit(X, y, ds=1.0)
-
-# Predict
-y_pred = model.predict(X, n_components=5)
-
-# Evaluate
-from fpls import compute_r2
-r2 = compute_r2(y, y_pred)
-print(f"R² = {r2:.3f}")
-```
-
-### Adaptive Component Selection
-
-```python
-from fpls import select_components
-
-# Automatically select the optimal number of components
-m_hat = select_components(X, y, m_max=10, tau=1.01, delta=0.1)
-print(f"Selected {m_hat} components")
-
-# Fit with selected components
-model = FunctionalPLS(m_max=m_hat)
-model.fit(X, y)
-y_pred = model.predict(X)
-```
-
-### Visualizing Results
-
-```python
-from fpls import plot_coefficient_function
-import numpy as np
-
-# Plot a single coefficient function
-s = np.linspace(0, 1, n_grid_points)
-fig, ax = plot_coefficient_function(
-    s, 
-    model.coef_[:, 5],
-    title="FPLS Coefficient Function (5 components)",
-    xlabel="Functional Domain",
-    ylabel="Coefficient Value"
-)
-plt.show()
-```
 
 ## API Reference
 

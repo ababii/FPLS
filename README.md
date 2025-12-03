@@ -34,7 +34,8 @@ pip install fpls
 This example demonstrates FPLS using real agricultural data, analyzing how temperature exposure affects corn and soybean yields.
 
 ```python
-from fpls import load_example_data, fit_fpls, plot_comparison
+from fpls import load_example_data, fit_fpls, plot_coefficient_function
+import matplotlib.pyplot as plt
 
 # Load corn and soybean data
 X_corn, y_corn, s = load_example_data("corn")
@@ -44,9 +45,11 @@ X_soy, y_soy, _ = load_example_data("soybeans")
 coef_corn, _ = fit_fpls(X_corn, y_corn, m_max=10, ds=1.0)
 coef_soy, _ = fit_fpls(X_soy, y_soy, m_max=10, ds=1.0)
 
-# Extract coefficients using 4 components
-beta_corn = coef_corn[:, 4]
-beta_soy = coef_soy[:, 4]
+# Extract coefficients using m components
+m = 4
+beta_corn = coef_corn[:, m]
+beta_soy = coef_soy[:, m]
+
 ```
 
 The coefficient functions reveal how different temperature ranges affect crop yields, with the functional approach capturing smooth nonlinear relationships that traditional methods might miss.
@@ -54,20 +57,23 @@ The coefficient functions reveal how different temperature ranges affect crop yi
 ### Visualizing Results
 
 ```python
-from fpls import plot_coefficient_function
-import numpy as np
-
-# Plot comparison
-fig, axes = plot_comparison(
-    s_list=[s, s],
-    beta_list=[beta_corn, beta_soy],
-    titles=["Impact of Temperature on Corn Yield", 
-            "Impact of Temperature on Soybeans Yield"],
+# Create individual plots
+fig1, ax1 = plot_coefficient_function(
+    s, beta_corn,
+    title="Impact of Temperature on Corn Yield",
     xlabel="Temperature (°C)",
     ylabel="Log Yield (Bushels)",
-    colors=["#2E86AB", "#E85D04"]
+    color="#2E86AB"
 )
-import matplotlib.pyplot as plt
+
+fig2, ax2 = plot_coefficient_function(
+    s, beta_soy,
+    title="Impact of Temperature on Soybeans Yield",
+    xlabel="Temperature (°C)",
+    ylabel="Log Yield (Bushels)",
+    color="#E85D04"
+)
+
 plt.show()
 ```
 

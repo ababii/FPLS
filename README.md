@@ -114,19 +114,6 @@ coef, ds = fit_fpls(X, y, m_max=10, ds=1.0)
 See the `examples/` directory for complete worked examples, including:
 - Basic functional regression
 - Component selection
-- Comparison with standard methods
-
-## Development
-
-Run tests:
-```bash
-pytest
-```
-
-Run tests with coverage:
-```bash
-pytest --cov=fpls --cov-report=html
-```
 
 ## Citation
 

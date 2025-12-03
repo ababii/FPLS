@@ -21,7 +21,7 @@ m = 10   # number of components for model
 s = np.linspace(0, 1, T)
 ds = s[1] - s[0]
 
-# Generate eigenvalues (decreasing)
+# Generate eigenvalues
 j = np.arange(1, J + 1)
 λ = 2 / (j ** 1.1)  # eigenvalues
 
@@ -30,18 +30,13 @@ v = np.sqrt(2) * np.cos(np.pi * s[:, np.newaxis] * j[np.newaxis, :])
 v[:, 0] = 1  # first eigenfunction is constant
 
 # Generate coefficient function β
-b1 = 4 / (j ** 2.7)
-beta_true = v @ b1
-
-# Generate error and scores
-ε = np.random.randn(n)
-u = np.random.randn(n, J)
+beta_true = v @ (4 / (j ** 2.7))
 
 # Generate functional covariate X
-X = u * np.sqrt(λ) @ v.T
+X = np.random.randn(n, J) * np.sqrt(λ) @ v.T
 
 # Generate response
-y = X @ beta_true / T + ε
+y = X @ beta_true / T + np.random.randn(n)
 
 # Split into train/test
 n_train = 750

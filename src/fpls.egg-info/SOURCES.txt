@@ -1,0 +1,14 @@
+LICENSE
+README.md
+pyproject.toml
+src/fpls/__init__.py
+src/fpls/core.py
+src/fpls/selection.py
+src/fpls/utils.py
+src/fpls.egg-info/PKG-INFO
+src/fpls.egg-info/SOURCES.txt
+src/fpls.egg-info/dependency_links.txt
+src/fpls.egg-info/requires.txt
+src/fpls.egg-info/top_level.txt
+tests/test_core.py
+tests/test_utils.py

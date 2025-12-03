@@ -1,12 +1,17 @@
 # FPLS: Functional Partial Least Squares
 
+[![PyPI version](https://img.shields.io/pypi/v/fpls.svg?color=blue)](https://pypi.org/project/fpls/)
+[![Downloads](https://static.pepy.tech/personalized-badge/fpls?period=total&units=international_system&left_color=blue&right_color=grey&left_text=Downloads)](https://pepy.tech/project/fpls)
+[![GitHub issues](https://img.shields.io/github/issues/ababii/fpls.svg)](https://github.com/ababii/fpls/issues)
+[![License](https://img.shields.io/github/license/ababii/fpls.svg)](https://github.com/ababii/fpls/blob/main/LICENSE)
+
 A Python package for functional regression using Partial Least Squares (PLS), implementing the methods from:
 
-> **Babii, A., Carrasco, M., & Tsafack, I.** (2023). "Functional Partial Least-Squares: Adaptive Estimation and Inference." *Journal of the American Statistical Association*.
+> **Babii, A., Carrasco, M., & Tsafack, I.** (2025). "Functional Partial Least-Squares: Adaptive Estimation and Inference." *Journal of the American Statistical Association*.
 
 ## Overview
 
-This package provides a clean, scikit-learn-style API for fitting functional PLS regression models with adaptive component selection. The core algorithm uses a conjugate gradient method to solve the functional PLS problem, with integrals approximated via Riemann sums on uniform grids.
+The **fpls** package provides a clean, scikit-learn-style API for fitting functional PLS regression models with adaptive component selection. The core algorithm uses a conjugate gradient method to solve the functional PLS problem, with integrals approximated via Riemann sums on uniform grids.
 
 **Key Features:**
 - **FunctionalPLS estimator** with `.fit()`, `.predict()`, and `.fit_predict()` methods
@@ -16,17 +21,10 @@ This package provides a clean, scikit-learn-style API for fitting functional PLS
 
 ## Installation
 
-Install in development (editable) mode:
+Install library:
 
 ```bash
-cd fpls
-pip install -e .
-```
-
-To include optional dependencies for model selection and plotting:
-
-```bash
-pip install -e ".[all]"
+pip install fpls
 ```
 
 ## Quick Start
@@ -140,7 +138,7 @@ If you use this package in your research, please cite:
   title={Functional Partial Least-Squares: Adaptive Estimation and Inference},
   author={Babii, Andrii and Carrasco, Marine and Tsafack, Idriss},
   journal={Journal of the American Statistical Association},
-  year={2023}
+  year={2025}
 }
 ```
 

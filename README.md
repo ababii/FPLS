@@ -31,7 +31,7 @@ pip install fpls
 
 ### Example: Temperature Effects on Crop Yields
 
-This example demonstrates FPLS using real agricultural data, analyzing how temperature exposure affects corn and soybean yields.
+This example demonstrates FPLS on a real-world climate impact study. Using 70 years of county-level data east of 100th meridian, 1950–2020, we analyze how temperature exposure affects corn and soybean yields. The outcome variable is log-yield (bushels per acre), and the functional regressor is the distribution of temperature exposure during the crop growing season, measured in growing degree-days and discretized into 1°C temperature bins.
 
 ```python
 from fpls import load_example_data, fit_fpls, plot_coefficient_function
@@ -51,8 +51,6 @@ beta_corn = coef_corn[:, m]
 beta_soy = coef_soy[:, m]
 
 ```
-
-The coefficient functions reveal how different temperature ranges affect crop yields, with the functional approach capturing smooth nonlinear relationships that traditional methods might miss.
 
 ### Visualizing Results
 
@@ -80,7 +78,6 @@ plot_coefficient_function(
     ax=ax2
 )
 
-
 fig.savefig('docs/images/crop_yield_comparison.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
@@ -89,7 +86,7 @@ plt.show()
 
 ![Temperature Effects on Crop Yields](docs/images/crop_yield_comparison.png)
 
-The coefficient functions reveal how different temperature ranges affect crop yields, with the functional approach capturing smooth nonlinear relationships that traditional methods might miss.
+The coefficient functions reveal how different temperature ranges affect crop yields, with the functional approach capturing nonlinearities of temperature effects at different parts of the distribution.
 
 ## API Reference
 

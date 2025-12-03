@@ -5,9 +5,9 @@
 [![GitHub issues](https://img.shields.io/github/issues/ababii/fpls.svg)](https://github.com/ababii/fpls/issues)
 [![License](https://img.shields.io/github/license/ababii/fpls.svg)](https://github.com/ababii/fpls/blob/main/LICENSE)
 
-A Python package for functional regression using Partial Least Squares (PLS), implementing the methods from:
+A Python package for functional regression using Partial Least Squares (PLS), implementing the methods developed in:
 
-> **Babii, A., Carrasco, M., & Tsafack, I.** (2025). "Functional Partial Least-Squares: Adaptive Estimation and Inference." *Journal of the American Statistical Association*.
+> **Babii, A., Carrasco, M., & Tsafack, I.** (2025). ["Functional Partial Least-Squares: Adaptive Estimation and Inference."](https://www.tandfonline.com/doi/full/10.1080/01621459.2025.2582874) *Journal of the American Statistical Association*.
 
 ## Overview
 
@@ -16,7 +16,6 @@ The **fpls** package provides a clean, scikit-learn-style API for fitting functi
 **Key Features:**
 - **FunctionalPLS estimator** with `.fit()`, `.predict()`, and `.fit_predict()` methods
 - **Adaptive early stopping** for automatic component selection
-- **Efficient conjugate gradient** algorithm for functional data
 - Support for both **NumPy arrays** and **Pandas DataFrames**
 
 ## Installation

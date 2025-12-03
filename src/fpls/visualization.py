@@ -80,7 +80,7 @@ def plot_coefficient_function(
 
     # Create new figure if ax is not provided
     if ax is None:
-        fig, ax = plt.subplots(figsize=figsize)
+        fig, ax = plt.subplots(figsize=figsize, dpi=100)
     else:
         fig = ax.get_figure()
 

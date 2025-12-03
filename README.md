@@ -57,26 +57,31 @@ The coefficient functions reveal how different temperature ranges affect crop yi
 ### Visualizing Results
 
 ```python
-# Create individual plots
-fig1, ax1 = plot_coefficient_function(
+# Create a figure with two subplots
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+# Plot corn on the first subplot
+plot_coefficient_function(
     s, beta_corn,
     title="Impact of Temperature on Corn Yield",
     xlabel="Temperature (°C)",
     ylabel="Log Yield (Bushels)",
-    color="#2E86AB"
+    color="#2E86AB",
+    ax=ax1
 )
 
-fig2, ax2 = plot_coefficient_function(
+# Plot soybeans on the second subplot
+plot_coefficient_function(
     s, beta_soy,
     title="Impact of Temperature on Soybeans Yield",
     xlabel="Temperature (°C)",
     ylabel="Log Yield (Bushels)",
-    color="#E85D04"
+    color="#E85D04",
+    ax=ax2
 )
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-fig.savefig('docs/images/crop_yield_comparison.png', dpi=300, bbox_inches='tight')
 
+fig.savefig('docs/images/crop_yield_comparison.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 

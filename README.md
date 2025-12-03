@@ -17,6 +17,7 @@ The **fpls** package provides a clean, scikit-learn-style API for fitting functi
 - **FunctionalPLS estimator** with `.fit()`, `.predict()`, and `.fit_predict()` methods
 - **Adaptive early stopping** for automatic component selection
 - Support for both **NumPy arrays** and **Pandas DataFrames**
+- **Visualization tools** for plotting coefficient functions
 
 ## Installation
 
@@ -28,7 +29,42 @@ pip install fpls
 
 ## Quick Start
 
-### Basic Usage
+### Example: Temperature Effects on Crop Yields
+
+This example demonstrates FPLS using real agricultural data, analyzing how temperature exposure affects corn and soybean yields.
+
+```python
+from fpls import load_example_data, fit_fpls, plot_comparison
+
+# Load corn and soybean data
+X_corn, y_corn, s = load_example_data("corn")
+X_soy, y_soy, _ = load_example_data("soybeans")
+
+# Fit FPLS models with 10 components
+coef_corn, _ = fit_fpls(X_corn, y_corn, m_max=10, ds=1.0)
+coef_soy, _ = fit_fpls(X_soy, y_soy, m_max=10, ds=1.0)
+
+# Extract coefficients using 4 components
+beta_corn = coef_corn[:, 4]
+beta_soy = coef_soy[:, 4]
+
+# Plot comparison
+fig, axes = plot_comparison(
+    s_list=[s, s],
+    beta_list=[beta_corn, beta_soy],
+    titles=["Impact of Temperature on Corn Yield", 
+            "Impact of Temperature on Soybeans Yield"],
+    xlabel="Temperature (°C)",
+    ylabel="Log Yield (Bushels)",
+    colors=["#2E86AB", "#E85D04"]
+)
+import matplotlib.pyplot as plt
+plt.show()
+```
+
+The coefficient functions reveal how different temperature ranges affect crop yields, with the functional approach capturing smooth nonlinear relationships that traditional methods might miss.
+
+### Basic Functional Regression
 
 ```python
 import numpy as np
@@ -70,18 +106,22 @@ model.fit(X, y)
 y_pred = model.predict(X)
 ```
 
-### Functional API (Research-Style)
-
-For users familiar with the original replication code:
+### Visualizing Results
 
 ```python
-from fpls import fit_fpls
+from fpls import plot_coefficient_function
+import numpy as np
 
-# Directly get coefficient array
-coef, ds = fit_fpls(X, y, m_max=10, ds=1.0)
-
-# coef has shape (n_features, m_max+1)
-# coef[:, j] gives coefficients using j components
+# Plot a single coefficient function
+s = np.linspace(0, 1, n_grid_points)
+fig, ax = plot_coefficient_function(
+    s, 
+    model.coef_[:, 5],
+    title="FPLS Coefficient Function (5 components)",
+    xlabel="Functional Domain",
+    ylabel="Coefficient Value"
+)
+plt.show()
 ```
 
 ## API Reference
@@ -102,6 +142,11 @@ coef, ds = fit_fpls(X, y, m_max=10, ds=1.0)
 **`select_components(X, y, m_max=10, ds=None, tau=1.01, delta=0.1, xi=0.01)`**
 - Adaptive early stopping to select optimal number of components
 
+**Visualization:**
+- `plot_coefficient_function(s, beta, ...)` - Plot single coefficient function
+- `plot_comparison(s_list, beta_list, titles, ...)` - Compare multiple functions
+- `load_example_data(dataset)` - Load example datasets ('corn' or 'soybeans')
+
 **Utilities:**
 - `create_uniform_grid(start, end, n_points)` - Create discretization grid
 - `compute_mse(y_true, y_pred)` - Mean squared error
@@ -114,6 +159,7 @@ coef, ds = fit_fpls(X, y, m_max=10, ds=1.0)
 See the `examples/` directory for complete worked examples, including:
 - Basic functional regression
 - Component selection
+- Crop yield analysis
 
 ## Citation
 

@@ -12,6 +12,9 @@ Main classes and functions:
     - FunctionalPLS: Main estimator class with scikit-learn style API
     - fit_fpls: Convenience function for quick fitting
     - select_components: Adaptive component selection via early stopping
+    - plot_coefficient_function: Visualize FPLS coefficient functions
+    - plot_comparison: Compare multiple coefficient functions
+    - load_example_data: Load example crop yield datasets
 
 Example:
     >>> from fpls import FunctionalPLS
@@ -36,6 +39,11 @@ from .utils import (
     frisch_waugh_residualize,
     validate_input,
 )
+from .visualization import (
+    plot_coefficient_function,
+    plot_comparison,
+    load_example_data,
+)
 
 __all__ = [
     "FunctionalPLS",
@@ -48,5 +56,8 @@ __all__ = [
     "center_functional_data",
     "frisch_waugh_residualize",
     "validate_input",
+    "plot_coefficient_function",
+    "plot_comparison",
+    "load_example_data",
     "__version__",
 ]

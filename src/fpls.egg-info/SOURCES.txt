@@ -5,6 +5,7 @@ src/fpls/__init__.py
 src/fpls/core.py
 src/fpls/selection.py
 src/fpls/utils.py
+src/fpls/visualization.py
 src/fpls.egg-info/PKG-INFO
 src/fpls.egg-info/SOURCES.txt
 src/fpls.egg-info/dependency_links.txt

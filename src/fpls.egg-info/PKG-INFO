@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: fpls
-Version: 0.1.0
+Version: 0.2.0
 Summary: Functional Partial Least Squares
 Author-email: Andrii Babii <andrii.babii@example.com>, Marine Carrasco <marine.carrasco@example.com>, Idriss Tsafack <idriss.tsafack@example.com>
 License: MIT
@@ -22,6 +22,7 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: numpy>=1.20.0
 Requires-Dist: pandas>=1.3.0
+Requires-Dist: seaborn>=0.11.0
 Provides-Extra: selection
 Requires-Dist: statsmodels>=0.13.0; extra == "selection"
 Provides-Extra: plotting
@@ -69,10 +70,11 @@ pip install fpls
 
 ### Example: Temperature Effects on Crop Yields
 
-This example demonstrates FPLS using real agricultural data, analyzing how temperature exposure affects corn and soybean yields.
+This example demonstrates FPLS on a real-world climate impact study. Using 70 years of county-level data east of 100th meridian, 1950–2020, we analyze how temperature exposure affects corn and soybean yields. The outcome variable is log-yield (bushels per acre), and the functional regressor is the distribution of temperature exposure during the crop growing season, measured in growing degree-days and discretized into 1°C temperature bins.
 
 ```python
-from fpls import load_example_data, fit_fpls, plot_comparison
+from fpls import load_example_data, fit_fpls, plot_coefficient_function
+import matplotlib.pyplot as plt
 
 # Load corn and soybean data
 X_corn, y_corn, s = load_example_data("corn")
@@ -82,85 +84,48 @@ X_soy, y_soy, _ = load_example_data("soybeans")
 coef_corn, _ = fit_fpls(X_corn, y_corn, m_max=10, ds=1.0)
 coef_soy, _ = fit_fpls(X_soy, y_soy, m_max=10, ds=1.0)
 
-# Extract coefficients using 4 components
-beta_corn = coef_corn[:, 4]
-beta_soy = coef_soy[:, 4]
+# Extract coefficients using m components
+m = 4
+beta_corn = coef_corn[:, m]
+beta_soy = coef_soy[:, m]
 
-# Plot comparison
-fig, axes = plot_comparison(
-    s_list=[s, s],
-    beta_list=[beta_corn, beta_soy],
-    titles=["Impact of Temperature on Corn Yield", 
-            "Impact of Temperature on Soybeans Yield"],
-    xlabel="Temperature (°C)",
-    ylabel="Log Yield (Bushels)",
-    colors=["#2E86AB", "#E85D04"]
-)
-import matplotlib.pyplot as plt
-plt.show()
-```
-
-The coefficient functions reveal how different temperature ranges affect crop yields, with the functional approach capturing smooth nonlinear relationships that traditional methods might miss.
-
-### Basic Functional Regression
-
-```python
-import numpy as np
-from fpls import FunctionalPLS
-
-# Generate synthetic functional data
-n_samples = 200
-n_grid_points = 50
-
-X = np.random.randn(n_samples, n_grid_points)
-beta_true = np.sin(np.linspace(0, 2*np.pi, n_grid_points))
-y = X @ beta_true + np.random.randn(n_samples) * 0.5
-
-# Fit Functional PLS
-model = FunctionalPLS(m_max=10)
-model.fit(X, y, ds=1.0)
-
-# Predict
-y_pred = model.predict(X, n_components=5)
-
-# Evaluate
-from fpls import compute_r2
-r2 = compute_r2(y, y_pred)
-print(f"R² = {r2:.3f}")
-```
-
-### Adaptive Component Selection
-
-```python
-from fpls import select_components
-
-# Automatically select the optimal number of components
-m_hat = select_components(X, y, m_max=10, tau=1.01, delta=0.1)
-print(f"Selected {m_hat} components")
-
-# Fit with selected components
-model = FunctionalPLS(m_max=m_hat)
-model.fit(X, y)
-y_pred = model.predict(X)
 ```
 
 ### Visualizing Results
 
 ```python
-from fpls import plot_coefficient_function
-import numpy as np
+# Create a figure with two subplots
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-# Plot a single coefficient function
-s = np.linspace(0, 1, n_grid_points)
-fig, ax = plot_coefficient_function(
-    s, 
-    model.coef_[:, 5],
-    title="FPLS Coefficient Function (5 components)",
-    xlabel="Functional Domain",
-    ylabel="Coefficient Value"
+# Plot corn on the first subplot
+plot_coefficient_function(
+    s, beta_corn,
+    title="Impact of Temperature on Corn Yield",
+    xlabel="Temperature (°C)",
+    ylabel="Log Yield (Bushels)",
+    color="#2E86AB",
+    ax=ax1
 )
+
+# Plot soybeans on the second subplot
+plot_coefficient_function(
+    s, beta_soy,
+    title="Impact of Temperature on Soybeans Yield",
+    xlabel="Temperature (°C)",
+    ylabel="Log Yield (Bushels)",
+    color="#E85D04",
+    ax=ax2
+)
+
+fig.savefig('docs/images/crop_yield_comparison.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
+
+**Output:**
+
+![Temperature Effects on Crop Yields](docs/images/crop_yield_comparison.png)
+
+The coefficient functions reveal how different temperature ranges affect crop yields, with the functional approach capturing nonlinearities of temperature effects at different parts of the distribution.
 
 ## API Reference
 
@@ -195,8 +160,7 @@ plt.show()
 ## Examples
 
 See the `examples/` directory for complete worked examples, including:
-- Basic functional regression
-- Component selection
+- Basic functional regression on simulated data
 - Crop yield analysis
 
 ## Citation
@@ -211,10 +175,6 @@ If you use this package in your research, please cite:
   year={2025}
 }
 ```
-
-## License
-
-MIT License - see LICENSE file for details.
 
 ## Authors
 

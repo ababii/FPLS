@@ -121,8 +121,7 @@ The coefficient functions reveal how different temperature ranges affect crop yi
 ## Examples
 
 See the `examples/` directory for complete worked examples, including:
-- Basic functional regression
-- Component selection
+- Basic functional regression on simulated data
 - Crop yield analysis
 
 ## Citation
@@ -137,10 +136,6 @@ If you use this package in your research, please cite:
   year={2025}
 }
 ```
-
-## License
-
-MIT License - see LICENSE file for details.
 
 ## Authors
 

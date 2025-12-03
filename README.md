@@ -74,6 +74,9 @@ fig2, ax2 = plot_coefficient_function(
     color="#E85D04"
 )
 
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+fig.savefig('docs/images/crop_yield_comparison.png', dpi=300, bbox_inches='tight')
+
 plt.show()
 ```
 

@@ -78,7 +78,6 @@ plot_coefficient_function(
     ax=ax2
 )
 
-fig.savefig('docs/images/crop_yield_comparison.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 

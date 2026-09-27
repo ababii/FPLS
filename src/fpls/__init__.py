@@ -26,7 +26,7 @@ Example:
     >>> y_pred = model.predict(X)
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.1"
 __author__ = "Andrii Babii, Marine Carrasco, Idriss Tsafack"
 
 from .core import FunctionalPLS, fit_fpls

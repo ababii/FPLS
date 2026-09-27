@@ -90,11 +90,8 @@ class FunctionalPLS:
         else:
             self.ds_ = ds
             
-        # Prepare data
-        y_2d = y.reshape(-1, 1)
-        
         # Compute r and K for PLS
-        r = X.T @ y_2d / n_samples
+        r = X.T @ y / n_samples
         K = X.T @ X * self.ds_ / n_samples
         
         # Run PLS conjugate gradient
@@ -113,7 +110,7 @@ class FunctionalPLS:
         
         Parameters
         ----------
-        r : np.ndarray of shape (n_features, 1)
+        r : np.ndarray of shape (n_features,)
             Right-hand side vector.
         K : np.ndarray of shape (n_features, n_features)
             Self-adjoint kernel matrix.
@@ -133,26 +130,14 @@ class FunctionalPLS:
         
         for j in range(self.m_max):
             Kd = K @ d
-            α1 = e.T @ K @ e
-            α = α1 / (Kd.T @ Kd)  # step size for the slope
-            
-            # Handle both pandas and numpy types
-            if hasattr(α, 'values'):
-                α_val = α.values[0, 0] if α.ndim > 1 else float(α.values)
-            else:
-                α_val = float(α)
-            
-            βhat[:, j+1] = βhat[:, j] + (d * α_val).ravel()  # update the slope
-            e = e - Kd * α_val  # update the residual
-            
-            γ = e.T @ K @ e / α1  # step size for conjugate direction
-            
-            if hasattr(γ, 'values'):
-                γ_val = γ.values[0, 0] if γ.ndim > 1 else float(γ.values)
-            else:
-                γ_val = float(γ)
-                
-            d = e + γ_val * d  # update the conjugate vector
+            α1 = e @ K @ e
+            α = α1 / (Kd @ Kd)  # step size for the slope
+
+            βhat[:, j+1] = βhat[:, j] + α * d  # update the slope
+            e = e - α * Kd  # update the residual
+
+            γ = (e @ K @ e) / α1  # step size for conjugate direction
+            d = e + γ * d  # update the conjugate vector
             
         return βhat
     

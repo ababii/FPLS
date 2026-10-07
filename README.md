@@ -7,7 +7,7 @@
 
 A Python package for functional regression using Partial Least Squares (PLS), implementing the methods developed in:
 
-> **Babii, A., Carrasco, M., & Tsafack, I.** (2025). ["Functional Partial Least-Squares: Adaptive Estimation and Inference."](https://www.tandfonline.com/doi/full/10.1080/01621459.2025.2582874) *Journal of the American Statistical Association*.
+> **Babii, A., Carrasco, M., & Tsafack, I.** (2026). ["Functional Partial Least-Squares: Adaptive Estimation and Inference."](https://www.tandfonline.com/doi/full/10.1080/01621459.2025.2582874) *Journal of the American Statistical Association*, 121(554), 1424–1434. Published online January 12, 2026. [DOI: 10.1080/01621459.2025.2582874](https://doi.org/10.1080/01621459.2025.2582874).
 
 ## Overview
 
@@ -128,11 +128,15 @@ See the `examples/` directory for complete worked examples, including:
 If you use this package in your research, please cite:
 
 ```bibtex
-@article{babii2023functional,
+@article{babii2026functional,
   title={Functional Partial Least-Squares: Adaptive Estimation and Inference},
   author={Babii, Andrii and Carrasco, Marine and Tsafack, Idriss},
   journal={Journal of the American Statistical Association},
-  year={2025}
+  year={2026},
+  volume={121},
+  number={554},
+  pages={1424--1434},
+  doi={10.1080/01621459.2025.2582874}
 }
 ```
 
